@@ -3,6 +3,7 @@ import struct
 
 
 class inode:
+    DIRECTORY = 0x4
     DATA_SIZE = 32  # size of 1 element of the inode table
     ZONE_ARRAY_SIZE = 7  # size of the zone array
 
