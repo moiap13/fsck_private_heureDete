@@ -1,0 +1,4 @@
+fsck/.idea/
+fsck/venv/
+.idea/
+*.o
