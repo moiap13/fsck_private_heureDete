@@ -5,10 +5,10 @@ if __name__ == '__main__':
     fs = file_system.file_system(img_file_path)
     de = fs.get_dir_entry(1024*223+64)
     print(de)
-    de = fs.get_inode(4)
+    de = fs.get_inode(2)
     print(de)
-    de = fs.browse_directory(1024*223)
+    de = fs.browse_directory(1024*220)
     for de_2 in de:
         print(de_2)
     print "****************** \n\n\n\n\n "
-    fs.browse_tree()
+    #fs.browse_tree()

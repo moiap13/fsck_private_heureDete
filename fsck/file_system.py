@@ -10,7 +10,7 @@ class file_system:
     DIRECTORY_TYPE = 0x4
     def __init__(self, image_path):
         self.image = open(image_path)
-        self.sb = s.superBlock.from_file(self.image)
+        self.sb = s.superBlock(self.image)
         print self.sb
         self.block_size = 1024 * 2 ** self.sb.log_zone_size
         self.inode_table_pos = (self.sb.imap_blocks + self.sb.zmap_blocks + 1) * self.block_size + self.sb.BLOCK0_SIZE
@@ -37,14 +37,14 @@ class file_system:
     def get_inode(self, inode_number):
         address = self.inode_table_pos + (inode_number - 1) * i.inode.DATA_SIZE
         self.image.seek(address)
-        return i.inode.from_file(self.image, self.sb.endian)
+        return i.inode(self.image, self.sb.endian, inode_number)
 
     def get_block(self, block_number):
         return block_number * self.block_size
 
     def get_dir_entry(self, address):
         self.image.seek(address)
-        return d.dir_entry.from_file(self.image, self.sb.endian)
+        return d.dir_entry(self.image, self.sb.endian)
 
     def get_inode_bitmap(self):
         self.image.seek(self.get_block(2))
