@@ -107,6 +107,17 @@ class file_system:
         # print("number of inodes that have a name: ")
         # print("number of blocks used by inodes: ")
 
+    def bmap(self, inode, blknum):
+        if (blknum < 7)  # cas 1
+            return inode.zone[blknum]
+        elif (blknum < 512):
+            indirect_block = self.get_block(inode.indr_zone)
+            return indirect_block[blknum]
+        elif [blknum < 512 ** 2]:
+            indirect_block = self.get_block(inode.dbl_indr_zone)
+            indirect_block_2 = self.get_block(indirect_block[blknum / 512])
+            return indirect_block_2[blknum % 512]
+
     def fsck(self):
         size_error = self.check_file_size()
         print("there are " + str(len(size_error)) + " files that are bigger than " + str(self.sb.max_size) + " byte")
